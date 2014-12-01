@@ -12,7 +12,7 @@
 #include "BloomEffect.hpp"
 
 // Whether to limit rendering to 60 fps
-#define ENABLE_FRAMELIMITING
+// #define ENABLE_FRAMELIMITING
 
 // Constants for initial window size
 static const size_t WINDOW_WIDTH = 1280;
@@ -34,7 +34,7 @@ void windowResizeCallback(GLFWwindow *window, int width, int height)
     if (globalRenderer != nullptr)
         globalRenderer->onWindowSizeChanged(width, height);
     if (globalBloomEffect != nullptr)
-        globalBloomEffect->onWindowSizeChanged(fbw, fbh);
+        globalBloomEffect->resize(fbw, fbh);
     LOG_INFO("Window resized. FB is now " << fbw << "x" << fbh);
 }
 

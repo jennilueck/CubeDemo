@@ -1,5 +1,7 @@
 #pragma once
 
+#include "GLShader.hpp"
+
 namespace cubedemo
 {
     // Implements a bloom effect
@@ -11,13 +13,33 @@ namespace cubedemo
     class BloomEffect
     {
     private:
+        GLShader m_shader;
+        size_t m_fbWidth, m_fbHeight; // Window framebuffer size
+        size_t m_bloomBufWidth, m_bloomBufHeight; // Size for bloom buffer
+        GLuint m_fullscreenQuadVAO;
+        GLuint m_pass1Index, m_pass2Index, m_pass3Index, m_pass4Index, m_pass5Index; // Render pass subroutine indices
+        GLuint m_hdrFBO, m_blurFBO; // FBO objects
+        GLuint m_hdrTex, m_tex1, m_tex2; // Texture objects
+        GLuint m_linearSampler, m_nearestSampler; // Sampler objects
+
+        float m_aveLum;
+
+        void setupFBO();
+        void setupShader();
+        void setupFullscreenQuad();
+
+        float gauss(float, float);
+        void computeLogAveLuminance();
 
     public:
         BloomEffect();
-        ~BloomEffect();
 
-        void onWindowSizeChanged(size_t width, size_t height);
+        void resize(size_t width, size_t height);
 
         void renderPass1();
+        void renderPass2();
+        void renderPass3();
+        void renderPass4();
+        void renderPass5();
     };
 }
